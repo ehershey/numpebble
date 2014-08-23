@@ -6,6 +6,8 @@
 
 var UI = require('ui');
 var Vector2 = require('vector2');
+var Settings = require('settings');
+
 
 var main = new UI.Card({
   title: 'Pebble.js',
@@ -56,3 +58,25 @@ main.on('click', 'down', function(e) {
   card.body('The simplest window type in Pebble.js.');
   card.show();
 });
+
+// Set a configurable with the open callback
+Settings.config(
+  { url: 'http://dropbox.ernie.org/pebbleconfig.html' },
+  function(e) {
+    console.log('opening configurable');
+
+    // Reset color to red before opening the webview
+    Settings.option('color', 'red');
+  },
+  function(e) {
+    console.log('closed configurable');
+    // Show the parsed response
+    console.log(JSON.stringify(e.options));
+
+    // Show the raw response if parsing failed
+    if (e.failed) {
+      console.log(e.response);
+    }
+  }
+  }
+);
