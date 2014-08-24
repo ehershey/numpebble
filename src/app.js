@@ -4,9 +4,36 @@
  * This is where you write your app.
  */
 
-var UI = require('ui');
-var Vector2 = require('vector2');
-var Settings = require('settings');
+try { 
+  var UI = require('ui');
+} catch(e) { var UI = { Card: function() { return { on: function() {}, show: function() {} } } } }
+try { 
+  var Vector2 = require('vector2');
+} catch(e) { var Vector2 = {} }
+try { 
+  var Settings = require('settings');
+} catch(e) { var Settings = { config: function() {} } }
+
+// Set a configurable with the open callback
+Settings.config(
+  { url: 'http://dropbox.ernie.org/pebbleconfig.html' },
+  function(e) {
+    console.log('opening configurable');
+
+    // Reset color to red before opening the webview
+    Settings.option('color', 'red');
+  },
+  function(e) {
+    console.log('closed configurable');
+    // Show the parsed response
+    console.log(JSON.stringify(e.options));
+
+    // Show the raw response if parsing failed
+    if (e.failed) {
+      console.log(e.response);
+    }
+  }
+);
 
 
 var main = new UI.Card({
@@ -59,24 +86,3 @@ main.on('click', 'down', function(e) {
   card.show();
 });
 
-// Set a configurable with the open callback
-Settings.config(
-  { url: 'http://dropbox.ernie.org/pebbleconfig.html' },
-  function(e) {
-    console.log('opening configurable');
-
-    // Reset color to red before opening the webview
-    Settings.option('color', 'red');
-  },
-  function(e) {
-    console.log('closed configurable');
-    // Show the parsed response
-    console.log(JSON.stringify(e.options));
-
-    // Show the raw response if parsing failed
-    if (e.failed) {
-      console.log(e.response);
-    }
-  }
-  }
-);
