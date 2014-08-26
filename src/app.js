@@ -21,12 +21,20 @@ Settings.config(
     console.log('opening configurable');
 
     // Reset color to red before opening the webview
-    Settings.option('color', 'red');
+    // Settings.option('color', 'red');
+    console.log('Settings.options: ');
+    var options = Settings.option();
+    console.log(JSON.stringify(options));
   },
   function(e) {
     console.log('closed configurable');
     // Show the parsed response
-    console.log(JSON.stringify(e.options));
+    console.log('Settings.options: ');
+    var options = Settings.option();
+    console.log(JSON.stringify(options));
+    console.log('e.options: ');
+    var options = e.option();
+    console.log(JSON.stringify(options));
 
     // Show the raw response if parsing failed
     if (e.failed) {
