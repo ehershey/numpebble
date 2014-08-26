@@ -4,8 +4,8 @@
  * This is where you write your app.
  */
 
-var METRIC_URL="http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi"
-// var METRIC_URL="http://dropbox.ernie.org/get_metrics.cgi";
+var METRICS_URL="http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi"
+// var METRICS_URL="http://dropbox.ernie.org/get_metrics.cgi";
 var CONFIG_URL = 'http://eahdroplet1.ernie.org/Dropbox/pebbleconfig.html';
 // var CONFIG_URL = 'http://dropbox.ernie.org/pebbleconfig.html';
 
@@ -17,7 +17,7 @@ try {
 } catch(e) { var Vector2 = {} }
 try { 
   var Settings = require('settings');
-} catch(e) { var Settings = { config: function() {} } }
+} catch(e) { var Settings = { config: function() {}, option: function() {}  } }
 try { 
   var ajax = require('ajax');
 } catch(e) { var ajax = { ajax: function() {} } }
