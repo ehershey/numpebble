@@ -4,6 +4,11 @@
  * This is where you write your app.
  */
 
+var METRIC_URL="http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi"
+// var METRIC_URL="http://dropbox.ernie.org/get_metrics.cgi";
+var CONFIG_URL = 'http://eahdroplet1.ernie.org/Dropbox/pebbleconfig.html';
+// var CONFIG_URL = 'http://dropbox.ernie.org/pebbleconfig.html';
+
 try { 
   var UI = require('ui');
 } catch(e) { var UI = { Card: function() { return { on: function() {}, show: function() {} } } } }
@@ -13,10 +18,13 @@ try {
 try { 
   var Settings = require('settings');
 } catch(e) { var Settings = { config: function() {} } }
+try { 
+  var ajax = require('ajax');
+} catch(e) { var ajax = { ajax: function() {} } }
 
 // Set a configurable with the open callback
 Settings.config(
-  { url: 'http://dropbox.ernie.org/pebbleconfig.html' },
+  { url: CONFIG_URL },
   function(e) {
     console.log('opening configurable');
 
@@ -48,7 +56,7 @@ var main = new UI.Card({
   title: 'Pebble.js',
   icon: 'images/menu_icon.png',
   subtitle: 'Hello World!',
-  body: 'Press any button.'
+  body: 'No metric data'
 });
 
 main.show();
@@ -93,4 +101,27 @@ main.on('click', 'down', function(e) {
   card.body('The simplest window type in Pebble.js.');
   card.show();
 });
+
+
+if(Settings.option("metric_id"))
+{
+  ajax(
+  { 
+    url: METRICS_URL, 
+    type: 'json'
+  }, 
+  function(data) {
+    for(var i = 0 ; i < data.length ; i++) {
+      if(data[i].id == metric_id) {
+        var label = data[i].label;
+        var value = data[i].value;
+        main.body(label + ': ' + value);
+      }
+    }
+  },
+  function(error) {
+        console.log('The ajax request failed: ' + error);
+  }
+  );
+}
 
