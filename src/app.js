@@ -103,7 +103,9 @@ main.on('click', 'down', function(e) {
 });
 
 
-if(Settings.option("metric_id"))
+var metric_id = Settings.option("metric_id");
+
+if(metric_id)
 {
   ajax(
   { 
