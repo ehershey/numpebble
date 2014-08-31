@@ -1,26 +1,31 @@
 /**
- * Welcome to Pebble.js!
+ * Numpebble written with Pebble.js!
  *
- * This is where you write your app.
  */
 
-var METRICS_URL="http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi"
+var METRICS_URL = "http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi";
 // var METRICS_URL="http://dropbox.ernie.org/get_metrics.cgi";
 var CONFIG_URL = 'http://eahdroplet1.ernie.org/Dropbox/pebbleconfig.html';
 // var CONFIG_URL = 'http://dropbox.ernie.org/pebbleconfig.html';
 
+var UI;
+var Vector2;
+var Settings;
+var ajax;
+
 try { 
-  var UI = require('ui');
-} catch(e) { var UI = { Card: function() { return { on: function() {}, show: function() {} } } } }
+  UI = require('ui');
+} 
+catch(e) { UI = { Card: function() { return { on: function() {}, show: function() {} }; } }; }
 try { 
-  var Vector2 = require('vector2');
-} catch(e) { var Vector2 = {} }
+  Vector2 = require('vector2');
+} catch(e) { Vector2 = {}; }
 try { 
-  var Settings = require('settings');
-} catch(e) { var Settings = { config: function() {}, option: function() {}  } }
+  Settings = require('settings');
+} catch(e) { Settings = { config: function() {}, option: function() {}  }; }
 try { 
-  var ajax = require('ajax');
-} catch(e) { var ajax = { ajax: function() {} } }
+  ajax = require('ajax');
+} catch(e) { ajax = { ajax: function() {} }; }
 
 // Set a configurable with the open callback
 Settings.config(
@@ -41,7 +46,7 @@ Settings.config(
     var options = Settings.option();
     console.log(JSON.stringify(options));
     console.log('e.options: ');
-    var options = e.option();
+    options = e.option();
     console.log(JSON.stringify(options));
 
     // Show the raw response if parsing failed
@@ -53,9 +58,9 @@ Settings.config(
 
 
 var main = new UI.Card({
-  title: 'Pebble.js',
+  title: 'Numpebble',
   icon: 'images/menu_icon.png',
-  subtitle: 'Hello World!',
+  subtitle: 'subtitle',
   body: 'No metric data'
 });
 
