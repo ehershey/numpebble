@@ -1,3 +1,11 @@
+// log if we can but if 'console' isn't defined, keep going anyways
+//
+try { 
+  console.log("app.js started loading");
+}
+catch(e) { 
+  // not much can be done here 
+}
 /**
  * Numpebble written with Pebble.js!
  *
@@ -138,3 +146,11 @@ if(metric_id)
   );
 }
 
+// log if we can but if 'console' isn't defined, keep going anyways
+//
+try { 
+  console.log("app.js finished loading");
+}
+catch(e) { 
+  // not much can be done here 
+}
