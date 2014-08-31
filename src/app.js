@@ -41,17 +41,23 @@ Settings.config(
   },
   function(e) {
     console.log('closed configurable');
-    // Show the parsed response
-    console.log('Settings.options: ');
-    var options = Settings.option();
-    console.log(JSON.stringify(options));
-    console.log('e.options: ');
-    options = e.option();
-    console.log(JSON.stringify(options));
-
     // Show the raw response if parsing failed
     if (e.failed) {
       console.log(e.response);
+    }
+    else {
+      // Show the parsed response
+      console.log('Settings.options: ');
+      var options = Settings.option();
+      console.log(JSON.stringify(options));
+      console.log('e.options: ');
+      if(e.option) {
+        var options = e.option();
+        console.log(JSON.stringify(options));
+      }
+      else {
+        console.log("no such member: e.option");
+      }
     }
   }
 );
