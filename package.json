@@ -1,0 +1,23 @@
+{
+  "name": "numpebble",
+  "version": "0.8.0",
+  "description": "View Numerous Metrics On Your Pebble",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ehershey/numpebble.git"
+  },
+  "keywords": [
+    "Numerous",
+    "Pebble"
+  ],
+  "author": "Ernie Hershey <numpebble@ernie.org>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ehershey/numpebble/issues"
+  },
+  "homepage": "https://github.com/ehershey/numpebble"
+}
