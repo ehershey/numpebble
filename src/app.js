@@ -49,21 +49,16 @@ Settings.config(
     console.log('closed configurable');
     // Show the raw response if parsing failed
     if (e.failed) {
+      console.log('failed - response:')
       console.log(e.response);
     }
     else {
       // Show the parsed response
       console.log('Settings.options: ');
       var options = Settings.option();
-      console.log(JSON.stringify(options));
-      console.log('e.options: ');
-      if(e.option) {
-        var options = e.option();
-        console.log(JSON.stringify(options));
-      }
-      else {
-        console.log("no such member: e.option");
-      }
+      console.log('Settings.option(apikey): ');
+      console.log(Settings.option("apikey"));
+      update_metrics();
     }
   }
 );
@@ -79,23 +74,8 @@ var main = new UI.Card({
 main.show();
 
 main.on('click', 'up', function(e) {
-  var menu = new UI.Menu({
-    sections: [{
-      items: [{
-        title: 'Pebble.js',
-        icon: 'images/menu_icon.png',
-        subtitle: 'Can do Menus'
-      }, {
-        title: 'Second Item',
-        subtitle: 'Subtitle Text'
-      }]
-    }]
-  });
-  menu.on('select', function(e) {
-    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-    console.log('The item is titled "' + e.item.title + '"');
-  });
-  menu.show();
+  metric_index--;
+  update_metrics();
 });
 
 main.on('click', 'select', function(e) {
@@ -112,42 +92,45 @@ main.on('click', 'select', function(e) {
 });
 
 main.on('click', 'down', function(e) {
-  var card = new UI.Card();
-  card.title('A Card');
-  card.subtitle('Is a Window');
-  card.body('The simplest window type in Pebble.js.');
-  card.show();
+  metric_index++;
+  update_metrics();
 });
 
 
-var apikey = Settings.option("apikey");
-
-if(apikey)
+var metric_index = 0;
+function update_metrics()
 {
-  ajax(
-  { 
-    url: METRICS_URL, 
-    type: 'json',
-    headers: { 'X-Ernie-Header': btoa(apikey + ':') }
-  }, 
-  function(data) {
-    for(var i = 0 ; i < data.length ; i++) {
-      // if(data[i].id == metric_id) {
-        var label = data[0].label;
-        var value = data[0].value;
-        main.body(label + ': ' + value);
-      // }
-    }
-  },
-  function(error) {
-        console.log('The ajax request failed: ' + error);
-  }
-  );
-}
-else { 
-  main.body("Must set api key in configuration");
-}
 
+
+  var apikey = Settings.option("apikey");
+
+  if(apikey)
+  {
+    ajax(
+    { 
+      url: METRICS_URL, 
+      type: 'json',
+      headers: { 'X-Ernie-Header': btoa(apikey + ':') }
+    }, 
+    function(data) {
+
+      if ( metric_index < 0) { metric_index = data.length + metric_index }
+      if(metric_index >= data.length) { metric_index = metric_index - data.length }
+      var label = data[metric_index].label;
+      var value = data[metric_index].value;
+      main.body(label + ': ' + value);
+    },
+    function(error) {
+          console.log('The ajax request failed: ' + error);
+    }
+    );
+  }
+  else { 
+    main.body("Must set api key in configuration");
+  }
+}
+update_metrics();
+  
 // log if we can but if 'console' isn't defined, keep going anyways
 //
 try { 
