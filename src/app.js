@@ -110,7 +110,7 @@ function update_metrics()
     { 
       url: METRICS_URL, 
       type: 'json',
-      headers: { 'X-Ernie-Header': btoa(apikey + ':') }
+      headers: { 'X-Ernie-Header': window.btoa(apikey + ':') }
     }, 
     function(data) {
 
