@@ -1,4 +1,4 @@
-var autoupdate_version = 14;
+var autoupdate_version = 15;
 var window;
 var $;
 // try {
@@ -52,8 +52,11 @@ function save_settings()
           
             // var options = { "newoptionname": "newoptionvalue" };
             // var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
+            console.log('before set option');
             Settings.option("apikey", apikey);
-            document.location.href = "pebblejs://close";
+            console.log('after set option');
+            console.log('setting document.location');
+            document.location = "pebblejs://close";
           }
           else { 
             display_error("Unknown Error");
