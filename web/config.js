@@ -1,4 +1,4 @@
-var autoupdate_version = 19;
+var autoupdate_version = 20;
 var window;
 var $;
 // try {
@@ -31,11 +31,12 @@ function save_settings()
     return;
   }
   display_message("Validating...");
+  var encoded_apikey =  btoa(apikey + ':');
   $.ajax(
       "list_metrics.cgi", 
       {
         beforeSend: function (xhr) {
-              xhr.setRequestHeader ("X-Ernie-Header", btoa(apikey + ':'));
+              xhr.setRequestHeader ("X-Ernie-Header", encoded_apikey);
         },
         error: function(jqXHR, textStatus, errorThrown ) { display_error('ajax error: ' + textStatus + ' / ' + errorThrown); },
         success: function( data, textStatus, jqXHR ) { 
@@ -49,7 +50,7 @@ function save_settings()
           else if(data[0].label && data[0].id) {
          
             display_message("OK!")
-            var options = { apikey: apikey };
+            var options = { encoded_apikey: encoded_apikey };
             var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
             display_message("<a href='" + url + "'>Click here to continue</a>!")
           

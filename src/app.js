@@ -56,8 +56,8 @@ Settings.config(
       // Show the parsed response
       console.log('Settings.options: ');
       var options = Settings.option();
-      console.log('Settings.option(apikey): ');
-      console.log(Settings.option("apikey"));
+      console.log('Settings.option(encoded_apikey): ');
+      console.log(Settings.option("encoded_apikey"));
       update_metrics();
     }
   }
@@ -102,15 +102,15 @@ function update_metrics()
 {
 
 
-  var apikey = Settings.option("apikey");
+  var encoded_apikey = Settings.option("encoded_apikey");
 
-  if(apikey)
+  if(encoded_apikey)
   {
     ajax(
     { 
       url: METRICS_URL, 
       type: 'json',
-      headers: { 'X-Ernie-Header': window.btoa(apikey + ':') }
+      headers: { 'X-Ernie-Header': encoded_apikey }
     }, 
     function(data) {
 
