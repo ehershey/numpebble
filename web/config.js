@@ -39,19 +39,28 @@ function save_settings()
         },
         error: function(jqXHR, textStatus, errorThrown ) { display_error('ajax error: ' + textStatus + ' / ' + errorThrown); },
         success: function( data, textStatus, jqXHR ) { 
-          alert(data);
-          for(var i = 0 ; i < data.length ; i++) 
+          if(data.error)
           {
-            var label = data[i].label;
-            var id = data[i].id;
-
-            var options = { metric_id: id };
-            display_message(label)
+            display_error(data.error);
           }
-          var options = { color: 'white', border: true };
-          var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
+          else if(!data.length) { 
+            display_error("No metrics found!")
+          }
+          else if(data[0].label && data[0].id) {
+         
+            display_message("OK!")
+          
+            // var options = { "newoptionname": "newoptionvalue" };
+            // var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
+            Settings.option("apikey", apikey);
+            document.location.href = "pebblejs://close";
+          }
+          else { 
+            display_error("Unknown Error");
+          }
         }
       });
+      
 }
 
 function display_message(msg) { 

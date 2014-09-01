@@ -11,10 +11,8 @@ catch(e) {
  *
  */
 
-var METRICS_URL = "http://eahdroplet1.ernie.org/Dropbox/list_metrics.cgi";
-// var METRICS_URL="http://dropbox.ernie.org/get_metrics.cgi";
-var CONFIG_URL = 'http://eahdroplet1.ernie.org/Dropbox/pebbleconfig.html';
-// var CONFIG_URL = 'http://dropbox.ernie.org/pebbleconfig.html';
+var METRICS_URL = "http://numpebble.ernie.org/list_metrics.cgi";
+var CONFIG_URL = "http://numpebble.ernie.org/config.html";
 
 var UI;
 var Vector2;
@@ -24,7 +22,7 @@ var ajax;
 try { 
   UI = require('ui');
 } 
-catch(e) { UI = { Card: function() { return { on: function() {}, show: function() {} }; } }; }
+catch(e) { UI = { Card: function() { return { on: function() {}, show: function() {}, body: function() {} }; } }; }
 try { 
   Vector2 = require('vector2');
 } catch(e) { Vector2 = {}; }
@@ -74,7 +72,7 @@ Settings.config(
 var main = new UI.Card({
   title: 'Numpebble',
   icon: 'images/menu_icon.png',
-  subtitle: 'subtitle',
+  subtitle: 'Metrics',
   body: 'No metric data'
 });
 
@@ -122,28 +120,32 @@ main.on('click', 'down', function(e) {
 });
 
 
-var metric_id = Settings.option("metric_id");
+var apikey = Settings.option("apikey");
 
-if(metric_id)
+if(apikey)
 {
   ajax(
   { 
     url: METRICS_URL, 
-    type: 'json'
+    type: 'json',
+    headers: { 'X-Ernie-Header': btoa(apikey + ':') }
   }, 
   function(data) {
     for(var i = 0 ; i < data.length ; i++) {
-      if(data[i].id == metric_id) {
-        var label = data[i].label;
-        var value = data[i].value;
+      // if(data[i].id == metric_id) {
+        var label = data[0].label;
+        var value = data[0].value;
         main.body(label + ': ' + value);
-      }
+      // }
     }
   },
   function(error) {
         console.log('The ajax request failed: ' + error);
   }
   );
+}
+else { 
+  main.body("Must set api key in configuration");
 }
 
 // log if we can but if 'console' isn't defined, keep going anyways
