@@ -1,4 +1,4 @@
-var autoupdate_version = 15;
+var autoupdate_version = 19;
 var window;
 var $;
 // try {
@@ -49,14 +49,17 @@ function save_settings()
           else if(data[0].label && data[0].id) {
          
             display_message("OK!")
+            var options = { apikey: apikey };
+            var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
+            display_message("<a href='" + url + "'>Click here to continue</a>!")
           
             // var options = { "newoptionname": "newoptionvalue" };
             // var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
-            console.log('before set option');
-            Settings.option("apikey", apikey);
-            console.log('after set option');
-            console.log('setting document.location');
-            document.location = "pebblejs://close";
+            // console.log('before set option');
+            // Settings.option("apikey", apikey);
+            // console.log('after set option');
+            // console.log('setting document.location');
+            // document.location = "pebblejs://close";
           }
           else { 
             display_error("Unknown Error");
