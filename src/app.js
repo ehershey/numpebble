@@ -14,6 +14,8 @@ catch(e) {
 var METRICS_URL = "http://numpebble.ernie.org/list_metrics.cgi";
 var CONFIG_URL = "http://numpebble.ernie.org/config.html";
 
+var REFRESH_INTERVAL = 30000;
+
 var UI;
 var Vector2;
 var Settings;
@@ -118,7 +120,9 @@ function update_metrics()
       if(metric_index >= data.length) { metric_index = metric_index - data.length }
       var label = data[metric_index].label;
       var value = data[metric_index].value;
-      main.body(label + ': ' + value);
+      var updated = data[metric_index].updated;
+      main.body(label + ': ' + value + '(' + updated + ')');
+      setTimeout(update_metrics,REFRESH_INTERVAL);
     },
     function(error) {
           console.log('The ajax request failed: ' + error);
