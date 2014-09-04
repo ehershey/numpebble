@@ -43,8 +43,8 @@
     },
     "shortName": "numpebble",
     "uuid": "7152f7e5-44a9-4669-95a8-fddb023d3533",
-    "versionCode": 9,
-    "versionLabel": "0.9",
+    "versionCode": 10,
+    "versionLabel": "0.10",
     "watchapp": {
         "watchface": false
     }
