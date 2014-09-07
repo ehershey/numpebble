@@ -120,7 +120,7 @@ function update_metrics()
       if(metric_index >= data.length) { metric_index = metric_index - data.length }
       var label = data[metric_index].label;
       var value = data[metric_index].value;
-      var updated = data[metric_index].updated;
+      var updated = new Date();
       main.body(label + ': ' + value + '(' + updated + ')');
       setTimeout(update_metrics,REFRESH_INTERVAL);
     },
