@@ -1,3 +1,4 @@
+// var console;
 // log if we can but if 'console' isn't defined, keep going anyways
 //
 try { 
@@ -5,6 +6,7 @@ try {
 }
 catch(e) { 
   // not much can be done here 
+  console = { log: function() { } };
 }
 /**
  * Numpebble written with Pebble.js!
@@ -13,6 +15,9 @@ catch(e) {
 
 var METRICS_URL = "http://numpebble.ernie.org/list_metrics.cgi";
 var CONFIG_URL = "http://numpebble.ernie.org/config.html";
+
+var autoupdate_version = 27;
+console.log('autoupdate_version: ' + autoupdate_version);
 
 var REFRESH_INTERVAL = 30000;
 
