@@ -13,10 +13,11 @@ catch(e) {
  *
  */
 
-var METRICS_URL = "http://numpebble.ernie.org/list_metrics.cgi";
-var CONFIG_URL = "http://numpebble.ernie.org/config.html";
+var autoupdate_version = 32;
 
-var autoupdate_version = 28;
+var METRICS_URL = "http://numpebble.ernie.org/list_metrics.cgi";
+var CONFIG_URL = "http://numpebble.ernie.org/config.html?appjsautoversion=" + autoupdate_version;
+
 console.log('autoupdate_version: ' + autoupdate_version);
 
 var REFRESH_INTERVAL = 30000;
