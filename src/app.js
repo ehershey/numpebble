@@ -22,6 +22,8 @@ console.log('autoupdate_version: ' + autoupdate_version);
 
 var REFRESH_INTERVAL = 30000;
 
+var metric_index = 0;
+
 var UI;
 var Vector2;
 var Settings;
@@ -57,13 +59,11 @@ Settings.config(
     console.log('closed configurable');
     // Show the raw response if parsing failed
     if (e.failed) {
-      console.log('failed - response:')
+      console.log('failed - response:');
       console.log(e.response);
     }
     else {
       // Show the parsed response
-      console.log('Settings.options: ');
-      var options = Settings.option();
       console.log('Settings.option(encoded_apikey): ');
       console.log(Settings.option("encoded_apikey"));
       update_metrics();
@@ -105,7 +105,7 @@ main.on('click', 'down', function(e) {
 });
 
 
-var metric_index = 0;
+
 function update_metrics()
 {
 
@@ -122,8 +122,8 @@ function update_metrics()
     }, 
     function(data) {
 
-      if ( metric_index < 0) { metric_index = data.length + metric_index }
-      if(metric_index >= data.length) { metric_index = metric_index - data.length }
+      if ( metric_index < 0) { metric_index = data.length + metric_index; }
+      if(metric_index >= data.length) { metric_index = metric_index - data.length; }
       var label = data[metric_index].label;
       var value = data[metric_index].value;
       var updated = new Date();
