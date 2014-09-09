@@ -1,8 +1,10 @@
-var autoupdate_version = 20;
+var autoupdate_version = 24;
 var window;
+var document;
 var $;
 // try {
 if(!window) window = {};
+if(!document) document = {};
 if(!$) { $ = function() {}; $.ajax = function() {}; };
 // }
 // catch(e) {
@@ -22,6 +24,13 @@ console.log(window.Settings.option);
 //
 $('#titleh1').text(document.title + '/' + autoupdate_version);
 // $.ajax("https://nmrs_1Ka3mVLFDQzE:@api.numerousapp.com/v1/users/self/metrics", { error: function() { console.log("error"); }, success: function() { console.log("success"); } })
+//
+
+// If setting exists, copy it into field
+//
+if(window.Settings && window.Settings.option && window.Settings.option("encoded_apikey")) {
+  $("#apikey").val(window.Settings.option("encoded_apikey"));
+}
 
 function save_settings() 
 {
