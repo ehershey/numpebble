@@ -1,4 +1,4 @@
-var autoupdate_version = 25;
+var autoupdate_version = 28;
 var window;
 var document;
 var $;
