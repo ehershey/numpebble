@@ -1,4 +1,4 @@
-var autoupdate_version = 31;
+var autoupdate_version = 35;
 var window;
 var document;
 var $;
@@ -32,7 +32,7 @@ if(window.Settings && window.Settings.option && window.Settings.option("encoded_
   $("#apikey").val(window.Settings.option("encoded_apikey"));
 }
 
-function save_settings() 
+function save_settings()
 {
   var apikey = $("#apikey").val();
   if(!apikey) {
@@ -42,27 +42,27 @@ function save_settings()
   display_message("Validating...");
   var encoded_apikey =  btoa(apikey + ':');
   $.ajax(
-      "list_metrics.cgi", 
+      "list_metrics.cgi",
       {
         beforeSend: function (xhr) {
               xhr.setRequestHeader ("X-Ernie-Header", encoded_apikey);
         },
         error: function(jqXHR, textStatus, errorThrown ) { display_error('ajax error: ' + textStatus + ' / ' + errorThrown); },
-        success: function( data, textStatus, jqXHR ) { 
+        success: function( data, textStatus, jqXHR ) {
           if(data.error)
           {
             display_error(data.error);
           }
-          else if(!data.length) { 
+          else if(!data.length) {
             display_error("No metrics found!")
           }
           else if(data[0].label && data[0].id) {
-         
+
             display_message("OK!")
             var options = { encoded_apikey: encoded_apikey };
             var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
             display_message("<a href='" + url + "'>Click here to continue</a>!")
-          
+
             // var options = { "newoptionname": "newoptionvalue" };
             // var url = 'pebblejs://close#' + encodeURIComponent(JSON.stringify(options));
             // console.log('before set option');
@@ -71,18 +71,18 @@ function save_settings()
             // console.log('setting document.location');
             // document.location = "pebblejs://close";
           }
-          else { 
+          else {
             display_error("Unknown Error");
           }
         }
       });
-      
+
 }
 
-function display_message(msg) { 
+function display_message(msg) {
   $("#progress").append("<span class='info'>" + msg + "</span>").append("<br/>");
 }
 
-function display_error(msg) { 
+function display_error(msg) {
   $("#progress").append("<span class='error'>" + msg + "</span>").append("<br/>");
 }
