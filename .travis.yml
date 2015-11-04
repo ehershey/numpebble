@@ -5,7 +5,7 @@ notifications:
   recipients:
     - github@ernie.org
   email:
-    on_success: aways
+    on_success: always
     on_failure: always
 
 # before_install: sudo apt-get install libtext-csv-perl
