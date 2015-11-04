@@ -1,4 +1,4 @@
-var autoupdate_version = 35;
+var autoupdate_version = 41;
 var window;
 var document;
 var $;
@@ -11,7 +11,7 @@ if(!$) { $ = function() {}; $.ajax = function() {}; };
   // console.log(e);
 // }
 try {
-  if(!window.Settings) { window.Settings = { option: "not really defined" }; }
+  // if(!window.Settings) { window.Settings = { option: "not really defined" }; }
 }
 catch(e) {
   console.log(e);
@@ -28,9 +28,17 @@ $('#titleh1').text(document.title + '/' + autoupdate_version);
 
 // If setting exists, copy it into field
 //
-if(window.Settings && window.Settings.option && window.Settings.option("encoded_apikey")) {
-  $("#apikey").val(window.Settings.option("encoded_apikey"));
+console.log('checking existing option');
+if(window.Settings && window.Settings.option && window.Settings.option.encoded_apikey) {
+  console.log('filling in option value');
+  $("#apikey").val(window.Settings.option.encoded_apikey);
 }
+else {
+  console.log('no option value');
+  $("#apikey").val(Settings.option);
+}
+
+
 
 function save_settings()
 {
